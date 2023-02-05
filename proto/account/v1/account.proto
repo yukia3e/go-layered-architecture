@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package account.v1;
+
+option go_package = "github.com/yukia3e/go-layered-architecture/internal/ui/grpc/gen/account/v1;accountv1";
+
+service AccountService {
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse) {}
+  rpc GetAccount(GetAccountRequest) returns (GetAccountResponse) {}
+}
+
+message CreateAccountRequest {
+  string handle_name = 1;
+}
+
+message CreateAccountResponse {
+  string user_id = 1;
+}
+
+message GetAccountRequest {
+  string user_id = 1;
+}
+
+message GetAccountResponse {
+  string user_id = 1;
+  string handle_name = 2;
+}

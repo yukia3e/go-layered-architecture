@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  go-layered-architecture:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./:/go/src/go-layered-architecture
+    ports:
+      - "8080:8080"
+    environment:
+      GOOGLE_APPLICATION_CREDENTIALS: ".gcloud/credentials.json"
+    env_file:
+      - ./.env
+      - ./.env.default
+    command: air
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
