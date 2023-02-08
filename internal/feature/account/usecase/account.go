@@ -1,4 +1,4 @@
-package account
+package usecase
 
 import (
 	"context"
@@ -6,20 +6,20 @@ import (
 	"github.com/rs/zerolog/log"
 
 	"github.com/pkg/errors"
-	accountModel "github.com/yukia3e/go-layered-architecture/internal/domain/model/account"
-	"github.com/yukia3e/go-layered-architecture/internal/domain/repository/account"
+	"github.com/yukia3e/go-layered-architecture/internal/feature/account/domain/model"
+	accountRepository "github.com/yukia3e/go-layered-architecture/internal/feature/account/domain/repository"
 )
 
 type Usecase interface {
 	CreateAccount(ctx context.Context, handleName string) (string, error)
-	GetAccount(ctx context.Context, userID string) (*accountModel.User, error)
+	GetAccount(ctx context.Context, userID string) (*model.User, error)
 }
 
 type usecase struct {
-	repository account.Repository
+	repository accountRepository.Repository
 }
 
-func NewUsecase(repository account.Repository) Usecase {
+func NewUsecase(repository accountRepository.Repository) Usecase {
 	return &usecase{
 		repository: repository,
 	}
@@ -32,7 +32,7 @@ func (u *usecase) CreateAccount(ctx context.Context, handleName string) (string,
 	userID := "UserA"
 
 	if err := u.repository.CreateAccount(ctx,
-		account.CreateAccountRequest{
+		accountRepository.CreateAccountRequest{
 			UserID:     userID,
 			HandleName: handleName,
 		},
@@ -43,7 +43,7 @@ func (u *usecase) CreateAccount(ctx context.Context, handleName string) (string,
 	return userID, nil
 }
 
-func (u *usecase) GetAccount(ctx context.Context, userID string) (*accountModel.User, error) {
+func (u *usecase) GetAccount(ctx context.Context, userID string) (*model.User, error) {
 	log.Debug().Msg("account.Usecase.GetAccount: called")
 
 	user, err := u.repository.GetAccount(ctx, userID)

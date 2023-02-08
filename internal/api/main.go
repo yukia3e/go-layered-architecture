@@ -9,17 +9,19 @@ import (
 	"github.com/yukia3e/go-layered-architecture/internal/config"
 	"github.com/yukia3e/go-layered-architecture/internal/ui/grpc/gen/account/v1/accountv1connect"
 
-	accountMemory "github.com/yukia3e/go-layered-architecture/internal/infrastructure/memory/account"
-	accountGrpc "github.com/yukia3e/go-layered-architecture/internal/ui/grpc/account"
-	"github.com/yukia3e/go-layered-architecture/internal/ui/http/health"
-	accountUsecase "github.com/yukia3e/go-layered-architecture/internal/usecase/account"
+	accountMemory "github.com/yukia3e/go-layered-architecture/internal/feature/account/infrastructure/memory"
+	accountGrpc "github.com/yukia3e/go-layered-architecture/internal/feature/account/ui/grpc"
+	accountUsecase "github.com/yukia3e/go-layered-architecture/internal/feature/account/usecase"
+	health "github.com/yukia3e/go-layered-architecture/internal/feature/health/ui/http"
 )
 
 func Run() error {
 	r := gin.Default()
 
+	// health
 	r.GET("/health", gin.WrapF(health.HandlerFunc))
 
+	// account
 	accountPath, accountHandler := accountv1connect.NewAccountServiceHandler(
 		accountGrpc.NewServer(
 			accountUsecase.NewUsecase(
