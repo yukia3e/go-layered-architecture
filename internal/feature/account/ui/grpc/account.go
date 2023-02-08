@@ -1,4 +1,4 @@
-package account
+package grpc
 
 import (
 	"context"
@@ -6,8 +6,8 @@ import (
 	"github.com/bufbuild/connect-go"
 	"github.com/rs/zerolog/log"
 
+	accountUsecase "github.com/yukia3e/go-layered-architecture/internal/feature/account/usecase"
 	accountv1 "github.com/yukia3e/go-layered-architecture/internal/ui/grpc/gen/account/v1"
-	account "github.com/yukia3e/go-layered-architecture/internal/usecase/account"
 )
 
 type Server interface {
@@ -16,10 +16,10 @@ type Server interface {
 }
 
 type server struct {
-	usecase account.Usecase
+	usecase accountUsecase.Usecase
 }
 
-func NewServer(usecase account.Usecase) Server {
+func NewServer(usecase accountUsecase.Usecase) Server {
 	return &server{
 		usecase: usecase,
 	}

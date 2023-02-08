@@ -1,10 +1,10 @@
-package account
+package memory
 
 import (
 	"context"
 
-	accountModel "github.com/yukia3e/go-layered-architecture/internal/domain/model/account"
-	"github.com/yukia3e/go-layered-architecture/internal/domain/repository/account"
+	accountModel "github.com/yukia3e/go-layered-architecture/internal/feature/account/domain/model"
+	account "github.com/yukia3e/go-layered-architecture/internal/feature/account/domain/repository"
 )
 
 type memory struct {
